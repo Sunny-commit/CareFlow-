@@ -1,0 +1,54 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(patientId) {
+      return isAuthenticated() && request.auth.uid == patientId;
+    }
+
+    function isDocOwner(resourceData) {
+      return isAuthenticated() && (
+        request.auth.uid == resourceData.patientId ||
+        request.auth.token.email == resourceData.patientEmail
+      );
+    }
+
+    // Departments: Public read and write for initialization/seeding
+    match /departments/{departmentId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // Doctors: Public read and write for initialization/seeding
+    match /doctors/{doctorId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // Availability Slots:
+    // - Public can read slots to view availability
+    // - Update allowed during booking or cancellation transactions
+    match /availabilitySlots/{slotId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // Appointments:
+    // - Read and create allowed for bookings and patient portal
+    match /appointments/{appointmentId} {
+      allow read: if true;
+      allow create, update: if true;
+      allow delete: if false; // Immutable audit trail
+    }
+
+    // Patients collection:
+    match /patients/{patientId} {
+      allow read, write: if true;
+    }
+  }
+}
