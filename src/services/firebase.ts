@@ -4,14 +4,24 @@ import { getFirestore, Firestore } from 'firebase/firestore';
 
 const env = import.meta.env;
 
+const DEFAULT_FIREBASE_CONFIG = {
+  apiKey: "AIzaSyASVUkhHH1sjSY8GEGrnQy51zzpu6qkG_Q",
+  authDomain: "careflow-hospital-54337.firebaseapp.com",
+  projectId: "careflow-hospital-54337",
+  storageBucket: "careflow-hospital-54337.firebasestorage.app",
+  messagingSenderId: "345221471191",
+  appId: "1:345221471191:web:2fb3603562b1a1b7c00992",
+  measurementId: "G-8SM4F69B5H"
+};
+
 const firebaseConfig = {
-  apiKey: env.VITE_FIREBASE_API_KEY || env.VITE_API_KEY || env.VITE_FIREBASE_KEY,
-  authDomain: env.VITE_FIREBASE_AUTH_DOMAIN || env.VITE_AUTH_DOMAIN,
-  projectId: env.VITE_FIREBASE_PROJECT_ID || env.VITE_PROJECT_ID,
-  storageBucket: env.VITE_FIREBASE_STORAGE_BUCKET || env.VITE_STORAGE_BUCKET,
-  messagingSenderId: env.VITE_FIREBASE_MESSAGING_SENDER_ID || env.VITE_MESSAGING_SENDER_ID,
-  appId: env.VITE_FIREBASE_APP_ID || env.VITE_APP_ID,
-  measurementId: env.VITE_FIREBASE_MEASUREMENT_ID || env.VITE_MEASUREMENT_ID,
+  apiKey: env.VITE_FIREBASE_API_KEY || env.VITE_API_KEY || env.VITE_FIREBASE_KEY || DEFAULT_FIREBASE_CONFIG.apiKey,
+  authDomain: env.VITE_FIREBASE_AUTH_DOMAIN || env.VITE_AUTH_DOMAIN || DEFAULT_FIREBASE_CONFIG.authDomain,
+  projectId: env.VITE_FIREBASE_PROJECT_ID || env.VITE_PROJECT_ID || DEFAULT_FIREBASE_CONFIG.projectId,
+  storageBucket: env.VITE_FIREBASE_STORAGE_BUCKET || env.VITE_STORAGE_BUCKET || DEFAULT_FIREBASE_CONFIG.storageBucket,
+  messagingSenderId: env.VITE_FIREBASE_MESSAGING_SENDER_ID || env.VITE_MESSAGING_SENDER_ID || DEFAULT_FIREBASE_CONFIG.messagingSenderId,
+  appId: env.VITE_FIREBASE_APP_ID || env.VITE_APP_ID || DEFAULT_FIREBASE_CONFIG.appId,
+  measurementId: env.VITE_FIREBASE_MEASUREMENT_ID || env.VITE_MEASUREMENT_ID || DEFAULT_FIREBASE_CONFIG.measurementId,
 };
 
 export const hasFirebaseConfig = Boolean(
